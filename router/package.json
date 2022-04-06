@@ -1,5 +1,5 @@
 {
-  "name": "todo",
+  "name": "router",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,15 +9,13 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
-    "mitt": "^3.0.0",
-    "nanoid": "^3.2.0",
-    "pubsub-js": "^1.9.4",
-    "vue": "^3.0.0"
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.14"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
+    "@vue/cli-plugin-babel": "~4.5.14",
+    "@vue/cli-plugin-eslint": "~4.5.14",
+    "@vue/cli-service": "~4.5.14",
     "@vue/compiler-sfc": "^3.0.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",

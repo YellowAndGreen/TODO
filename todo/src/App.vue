@@ -15,7 +15,7 @@ import pubsub from 'pubsub-js'
 import Top from './components/Top.vue'
 import Bottom from './components/Bottom.vue'
 import List from './components/List.vue'
-
+import axios from 'axios'
 
 
 export default {
@@ -78,6 +78,18 @@ export default {
   mounted(){
     this.pubid = pubsub.subscribe('deleteTodo',this.deleteTodo)
     this.pubid2 = pubsub.subscribe('updateTodo',this.updateTodo)
+    axios.get(`http://localhost:8000/flashcards/dict_query_get/find/`).then(
+    response => {
+        console.log('请求成功了')
+        //请求成功后更新List的数据
+        console.log('数据为：'+response.data['html_result'])
+    },
+    error => {
+        //请求后更新List的数据
+        console.log('请求失败'+error)
+    }
+)
+    
   },
   beforeUnmount() {
     pubsub.unsubscribe(this.pubid)
