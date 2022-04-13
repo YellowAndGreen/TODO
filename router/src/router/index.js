@@ -3,6 +3,7 @@ import {createRouter,createWebHashHistory} from 'vue-router'
 //引入组件
 import About from '../components/About'
 import Home from '../components/Home'
+import TestRouter from '../components/TestRouter'
 
 //创建并暴露一个路由器
 export default createRouter({
@@ -15,6 +16,12 @@ export default createRouter({
 		{
 			path:'/home',
 			component:Home
+		},
+		{
+			name:'TestRouter',
+			path:'/testRouter',
+			component:TestRouter
 		}
 	]
 })
+
