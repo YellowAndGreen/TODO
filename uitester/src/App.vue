@@ -1,17 +1,19 @@
 <template>
   <HelloWorld msg="Welcome to Your Vue.js App"/>
-  <CollaspList/>
+  <a-row justify="center" id="card">
+  <CardView />
+  </a-row>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
-import CollaspList from './components/CollaspList'
+import CardView from "@/components/CardView";
 
 export default {
   name: 'App',
   components: {
-    CollaspList,
-    HelloWorld
+    HelloWorld,
+    CardView
   }
 }
 </script>
@@ -23,4 +25,11 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
+#card{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  align-self: center;
+}
+html,body{height:100%;margin:0;}
 </style>
