@@ -1,156 +1,67 @@
 <template>
-<div id="root">
-  <div class="todo-container">
-    <div class="todo-wrap">
-    <Top @addTodo="addTodo"/>
-    <List :todos='todos' :checkTodo="checkTodo"/>
-    <Bottom :todos='todos' :checkAllTodo="checkAllTodo" :clearAllTodo="clearAllTodo"/>
+
+  <div class="container">
+      <div class="app-content animated bounce">
+        <navheader></navheader>
+        <router-view v-slot="{ Component }">
+            <transition enter-active-class="fadeIn animated faster" leave-active-class="fadeOut animated faster">
+                <component :is="Component"></component>
+            </transition>
+        </router-view>
+
+      </div>
     </div>
-  </div>
-</div>
+
 </template>
-
 <script>
-import pubsub from 'pubsub-js'
-import Top from './components/Top.vue'
-import Bottom from './components/Bottom.vue'
-import List from './components/List.vue'
-import axios from 'axios'
+  import navheader from './components/navheader.vue'
 
-
-export default {
-  name: 'App',
-  components: {
-    Top,Bottom,List
-  },
-    data(){
-    return {
-        todos:JSON.parse(localStorage.getItem('todo'))||[]
-    }
-  },
-  methods:{
-    //添加todo
-    addTodo(todoObj){
-      this.todos.unshift(todoObj)
+  /**
+   * 待办事项页面组件
+   */
+  export default {
+    name: 'App',// 组件的名称，尽量和文件名一致
+    components: {
+      navheader,
     },
-    //勾选或者取消勾选todo
-    checkTodo(id){
-      this.todos.forEach(todo => {
-        if(todo.id===id) todo.done =!todo.done
-
-      });
-    },
-    deleteTodo(_,id){
-      this.todos = this.todos.filter((todo)=>{
-        return todo.id !==id
-        }
-      )
-    },
-    updateTodo(_,id_title){
-
-      this.todos.forEach(todo => {
-        if(todo.id===id_title[0]) todo.value = id_title[1]
-      });
-      
-    },
-    //全部勾选或者全不勾选
-    checkAllTodo(done){
-        this.todos.forEach(todo => {
-          todo.done = done
-      });
-    },
-    //清除所有已经完成的todo
-    clearAllTodo(){
-      this.todos = this.todos.filter((todo)=>{
-        return !todo.done
-      })
-    },
-  },
-  watch:{
-    todos:{
-      immediate:true,
-      deep:true,
-      handler(newval){
-        localStorage.setItem('todo',JSON.stringify(newval))
-      }
-    }
-  },
-  mounted(){
-    this.pubid = pubsub.subscribe('deleteTodo',this.deleteTodo)
-    this.pubid2 = pubsub.subscribe('updateTodo',this.updateTodo)
-    axios.get(`http://localhost:8000/flashcards/dict_query_get/find/`).then(
-    response => {
-        console.log('请求成功了')
-        //请求成功后更新List的数据
-        console.log('数据为：'+response.data['html_result'])
-    },
-    error => {
-        //请求后更新List的数据
-        console.log('请求失败'+error)
-    }
-)
-    
-  },
-  beforeUnmount() {
-    pubsub.unsubscribe(this.pubid)
-  },
-}
+  }
 </script>
-
 <style>
-/*base*/
-body {
-  background: #fff;
-}
-
-.btn {
-  display: inline-block;
-  padding: 4px 12px;
-  margin-bottom: 0;
-  font-size: 14px;
-  line-height: 20px;
-  text-align: center;
-  vertical-align: middle;
-  cursor: pointer;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-  border-radius: 4px;
-}
-
-.btn-edit {
-  color: #fff;
-  background-color: #9edbff;
-  border: 1px solid #47a3ee;
-}
-
-.btn-danger {
-  color: #fff;
-  background-color: #da4f49;
-  border: 1px solid #bd362f;
-}
-
-.btn-danger:hover {
-  color: #fff;
-  background-color: #bd362f;
-}
-
-.btn:focus {
-  outline: none;
-}
-
-.todo-container {
-  width: 600px;
-  margin: 0 auto;
-}
-.todo-container .todo-wrap {
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-
-
-
-
-
-
-
+  body {
+    margin: 0; /* 清除页面默认边距 */
+  }
+  #app {
+    color: #2c3e50;/* 设置默认字体颜色 */
+    background: linear-gradient(180deg, #2ebf91, #8360c3);/* 设置线性渐变：从蓝色到紫色 */
+    height: 100vh;/* 设置容器高度为撑满容器 */
+    display: flex;/* 设置容器为弹性布局 */
+    align-items: center/* 设置文字居中 */
+  }
+  .container {
+    padding: 0 10px;/* 设置内边距 */
+    flex-grow: 1;/* 设置弹性值为了撑满宽度 */
+    margin: 0 auto;/* 设置居中 */
+    position: relative;
+  }
+  .app-content {
+    background: #ededed;/* 设置背景颜色 */
+    padding: 16px;/* 设置内边距 */
+    padding-top: 0;/* 设置内上边距为0 */
+    border-radius: 5px;/* 设置圆角属性 */
+    box-shadow: 0 0 30px -5px #2c3e50;/* 设置边框阴影 */
+    margin: 16px auto;/* 设置上下边距并左右居中 */
+    min-height: 400px;/* 设置最小高度 */
+  }
+  /* 美化滚动条样式 */
+  ::-webkit-scrollbar {
+    background: 0 0;
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #d7d7d7;
+    border-radius: 6px;
+    width: 6px;
+    height: 6px;
+  }
 </style>
