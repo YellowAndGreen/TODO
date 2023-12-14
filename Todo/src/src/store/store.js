@@ -1,14 +1,14 @@
 
-import {createStore} from 'vuex'
+import Vuex from 'vuex'
 import dataUtils from '../utils/dataUtils'
 const myPlugin = (store) => {
   store.subscribe((mutation, state) => {
-    // 每次调用mutation，在这里持久化数据
+    // 每次调用mutation，在这里持久化数据，将数据存入浏览器缓存中
     dataUtils.setItem('todoList', state.todoItems)
     dataUtils.setItem('recycleList', state.recycleItems)
   })
 }
-export default createStore({
+export default Vuex.createStore({
   plugins: [myPlugin],
   state: {
     todoItems:dataUtils.getItem('todoList') || [],

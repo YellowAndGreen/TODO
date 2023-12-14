@@ -16,7 +16,6 @@
     </div>
   </div>
 </template>
-
 <script>
   import titem from '../components/titem.vue'
   import {ref,computed,toRaw} from 'vue'

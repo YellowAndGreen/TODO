@@ -1,9 +1,9 @@
 import todo from '../views/todo.vue' // 代办事项页面
 import recycle from '../views/recycle.vue' // 回收站页面
-import {createRouter,createWebHistory} from 'vue-router'
+import {createRouter,createWebHashHistory} from 'vue-router'
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes: [
       { path: '/', redirect: '/todo' },// 配置默认路由，重定向到/todo
       { path: '/todo', component: todo },

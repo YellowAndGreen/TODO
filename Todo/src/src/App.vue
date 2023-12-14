@@ -3,6 +3,7 @@
   <div class="container">
       <div class="app-content animated bounce">
         <navheader></navheader>
+        <!-- <router-view>组件的插槽作用域包含了与当前路由匹配的组件。你可以通过v-slot指令来访问这个插槽作用域。 -->
         <router-view v-slot="{ Component }">
             <transition enter-active-class="fadeIn animated faster" leave-active-class="fadeOut animated faster">
                 <component :is="Component"></component>
@@ -13,19 +14,17 @@
     </div>
 
 </template>
-<script>
+<script setup>
   import navheader from './components/navheader.vue'
 
   /**
    * 待办事项页面组件
    */
-  export default {
-    name: 'App',// 组件的名称，尽量和文件名一致
-    components: {
-      navheader,
-    },
-  }
+   const components = {
+        navheader,
+                };
 </script>
+
 <style>
   body {
     margin: 0; /* 清除页面默认边距 */
